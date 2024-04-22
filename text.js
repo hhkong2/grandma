@@ -29,6 +29,7 @@ export class Text {
 
 
     document.addEventListener('keydown', (event) => {
+        console.log(event);
         if (event.key === 'Enter' || event.key === " "){
             if (this.enter_push === 'idle')
                 this.enter_push = 'on';
