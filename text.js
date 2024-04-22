@@ -29,7 +29,6 @@ export class Text {
 
 
     document.addEventListener('keydown', (event) => {
-        console.log(event);
         if (event.key === 'Enter' || event.key === " "){
             if (this.enter_push === 'idle')
                 this.enter_push = 'on';
@@ -39,7 +38,7 @@ export class Text {
     document.addEventListener('keyup', (event) => {
         if (event.key === 'Enter' || event.key === " "){
             this.enter_pushing_time = 0;
-            if (this.enter_push === 'on' && this.enter_pushing활_time < KEY_GAP)
+            if (this.enter_push === 'on' && this.enter_pushing_time < KEY_GAP)
                 this.pushEnter();
             this.enter_push = 'idle';
         }
