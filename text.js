@@ -104,8 +104,6 @@ export class Text {
 
   pushLongEnter(){
     let word = this.monitor_list[this.monitor_state][this.key_state];
-    console.log(word);
-    console.log(word.length);
     if ( word.length == 1){
         this.inputWord(word);
     }
