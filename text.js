@@ -19,6 +19,7 @@ export class Text {
 
     document.addEventListener('keydown', (event) => {
         if (event.key === 'Enter' || event.key === " "){
+            event.preventDefault();
             if (this.enter_push === 'idle')
                 this.enter_push = 'on';
         }
@@ -36,6 +37,12 @@ export class Text {
         else if (event.key === 'e'){
             this.keyboard_index = 2;
             this.keyboard = this.keyboard_list[this.keyboard_index];
+        }
+        else if (event.key === 'ArrowLeft'){
+            this.keyboard.pushLeft();
+        }
+        else if (event.key === 'ArrowRight'){
+            this.keyboard.pushRight();
         }
     });
 

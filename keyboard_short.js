@@ -72,5 +72,11 @@ export class Keyboard {
         }
     }
       
+    pushLeft(){
+        return;
+    }
+    pushRight(){
+        return;
+    }
 
 }

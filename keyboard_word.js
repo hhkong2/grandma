@@ -1,10 +1,11 @@
 export class Keyboard {
     constructor(){
         this.monitor_state = 0;
-        this.monitor_list = {
-            0 : ['다음', '할머니', '모두', '첫째', '둘째', '막내', '아들', '며느리', '전희선', '전희원', '전희광', '전희나', '전희호', '전희연', '전희준', '전희진'],
-            1 : ['다음', '괜찮아', '힘들어', '힘낼게', '사랑해' , '고마워', '미안해', '보고싶어', ],
-        }
+        this.monitor_list = [
+            ['다음', '할머니', '모두', '첫째', '둘째', '막내', '아들', '며느리', '전희광'],
+            // ['다음', '할머니', '모두', '첫째', '둘째', '막내', '아들', '며느리', '전희선', '전희원', '전희광', '전희나', '전희호', '전희연', '전희준', '전희진'],
+            ['다음', '괜찮아', '힘들어', '힘낼게', '사랑해' , '고마워', '미안해', '보고싶어', ],
+        ]
 
         this.key_state = 0;
         this.line_length = 5;
@@ -68,5 +69,13 @@ export class Keyboard {
         }
     }
       
+    pushLeft(){
+        var monitor_state = this.monitor_state - 1;
+        this.monitor_state = Math.max(0, monitor_state);
+    }
+    pushRight(){
+        var monitor_state = this.monitor_state + 1;
+        this.monitor_state = Math.min(this.monitor_list.length - 1, monitor_state);
+    }
 
 }
