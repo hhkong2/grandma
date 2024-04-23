@@ -1,5 +1,3 @@
-import { Dialog } from "./dialog.js";
-import { Point } from "./point.js";
 import { Text } from "./text.js";
 
 class App {
@@ -9,9 +7,6 @@ class App {
     this.ctx = this.canvas.getContext("2d");
 
     this.pixelRatio = window.devicePixelRatio > 1 ? 2 : 1;
-
-    this.mousePos = new Point();
-    this.curItem = null;
     
     this.text = new Text();
 
@@ -22,6 +17,9 @@ class App {
     this.resize();
 
     window.requestAnimationFrame(this.animate.bind(this));
+    document.oncontextmenu = function(){return false;}
+    document.onselectstart = function(){return false;}
+
 
   }
 
