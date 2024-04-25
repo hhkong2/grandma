@@ -1,22 +1,21 @@
 export class Keyboard {
     constructor(){
         this.monitor_state = 0;
-        this.monitor_list = {
-            0 : ['모음', 'ㄱ', 'ㄴ', 'ㄷ', 'ㄹ', 'ㅁ', 'ㅂ', 'ㅅ', 'ㅇ', 'ㅈ', 'ㅊ', 'ㅋ', 'ㅌ', 'ㅍ', 'ㅎ'],
-            1 : ['자음', 'ㅏ', 'ㅓ', 'ㅗ', 'ㅜ', 'ㅡ', 'ㅣ', 'ㅐ', 'ㅔ', 'ㅢ', 'ㅘ', 'ㅝ', 'ㅙ'],
-        }
+        this.monitor_list = [
+            ['걱정돼', '고맙다', '무섭다', '답답해', '불안해', '불편해', '미안해', '든든해', '반갑다', '서운해', '섭섭해', '슬프다', '사랑해', 
+            '외롭다', '즐겁다', '지루해', '창피해', '힘들다', '행복해', '화나다'],
+        ]
 
         this.key_state = 0;
         this.line_length = 5;
-        this.word_size = 120;
-
+        this.word_size = 80;
     }
     drawMonitor(ctx, enter_pushing_time, WAIT_TIME, KEY_GAP){
         ctx.font = "bold "+this.word_size.toString()+"px serif";
-        let x = 100;
-        let y = 300 + this.word_size;
+        let x = 50;
+        let y = 200 + this.word_size;
         let dy = 100 + this.word_size;
-        let dx = 150 + this.word_size;
+        let dx = 200 + this.word_size;
         let rect_gap = 10;
         ctx.lineWidth = 5;
         
@@ -54,29 +53,16 @@ export class Keyboard {
 
     pushLongEnter(){
         let word = this.monitor_list[this.monitor_state][this.key_state];
-    
-        if (this.key_state == 0){
-            if (this.monitor_state == 0) this.monitor_state = 1;
-            else this.monitor_state = 0;
-    
-        } else{
-            if (this.monitor_state == 0) this.monitor_state = 1;
-            else this.monitor_state = 0;
-        } 
-    
-        this.key_state = 0;
-        if ( word.length == 1){
-            return word;
-        } else{
-            return '';
-        }
+        return word + " ";
     }
       
     pushLeft(){
-        return;
+        var monitor_state = this.monitor_state - 1;
+        this.monitor_state = Math.max(0, monitor_state);
     }
     pushRight(){
-        return;
+        var monitor_state = this.monitor_state + 1;
+        this.monitor_state = Math.min(this.monitor_list.length - 1, monitor_state);
     }
 
 }

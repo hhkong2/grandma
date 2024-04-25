@@ -1,24 +1,23 @@
 export class Keyboard {
     constructor(){
         this.monitor_state = 0;
-        this.monitor_list = {
-            0 : ['모음', 'ㄱ', 'ㄴ', 'ㄷ', 'ㄹ', 'ㅁ', 'ㅂ', 'ㅅ', 'ㅇ', 'ㅈ', 'ㅊ', 'ㅋ', 'ㅌ', 'ㅍ', 'ㅎ'],
-            1 : ['자음', 'ㅏ', 'ㅓ', 'ㅗ', 'ㅜ', 'ㅡ', 'ㅣ', 'ㅐ', 'ㅔ', 'ㅢ', 'ㅘ', 'ㅝ', 'ㅙ'],
-        }
+        this.monitor_list = [
+            ['응', '아니'],
+        ]
 
         this.key_state = 0;
         this.line_length = 5;
-        this.word_size = 120;
-
+        this.word_size = 350;
+        this.selected = false;
     }
     drawMonitor(ctx, enter_pushing_time, WAIT_TIME, KEY_GAP){
         ctx.font = "bold "+this.word_size.toString()+"px serif";
         let x = 100;
-        let y = 300 + this.word_size;
+        let y = 400 + this.word_size;
         let dy = 100 + this.word_size;
-        let dx = 150 + this.word_size;
-        let rect_gap = 10;
-        ctx.lineWidth = 5;
+        let dx = 200 + this.word_size;
+        let rect_gap = 40;
+        ctx.lineWidth = 10;
         
         let text_list = this.monitor_list[this.monitor_state];
         
@@ -34,8 +33,10 @@ export class Keyboard {
                 ctx.strokeStyle = "black";
                 ctx.strokeRect(x + dx * col, rect_gap + y + dy * row, text_size.width, -this.word_size);
                 let push_time = enter_pushing_time - KEY_GAP < 0 ? 0 : enter_pushing_time - KEY_GAP; 
-                ctx.fillStyle = "yellow";
-                ctx.fillRect(x + dx * col, rect_gap + y + dy * row, text_size.width, -this.word_size);
+                if (this.selected){
+                    ctx.fillStyle = "yellow";
+                    ctx.fillRect(x + dx * col, rect_gap + y + dy * row, text_size.width, -this.word_size);
+                }
                 ctx.fillStyle = "green";
                 ctx.fillRect(x + dx * col, rect_gap + y + dy * row, text_size.width *  push_time / WAIT_TIME, -this.word_size);
             }
@@ -50,33 +51,22 @@ export class Keyboard {
         if (this.key_state >= this.monitor_list[this.monitor_state].length){
             this.key_state = 0;
         }
+        this.selected = false;
     }
 
     pushLongEnter(){
         let word = this.monitor_list[this.monitor_state][this.key_state];
-    
-        if (this.key_state == 0){
-            if (this.monitor_state == 0) this.monitor_state = 1;
-            else this.monitor_state = 0;
-    
-        } else{
-            if (this.monitor_state == 0) this.monitor_state = 1;
-            else this.monitor_state = 0;
-        } 
-    
-        this.key_state = 0;
-        if ( word.length == 1){
-            return word;
-        } else{
-            return '';
-        }
+        this.selected = true;
+        return word + " ";
     }
       
     pushLeft(){
-        return;
+        var monitor_state = this.monitor_state - 1;
+        this.monitor_state = Math.max(0, monitor_state);
     }
     pushRight(){
-        return;
+        var monitor_state = this.monitor_state + 1;
+        this.monitor_state = Math.min(this.monitor_list.length - 1, monitor_state);
     }
 
 }

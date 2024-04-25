@@ -1,6 +1,8 @@
+import { Keyboard as key0 } from "./keyboard_yesorno.js";
 import { Keyboard as key1 } from "./keyboard_yo.js";
 import { Keyboard as key2} from "./keyboard_short.js";
 import { Keyboard as key3} from "./keyboard_word.js";
+import { Keyboard as key4} from "./keyboard_emotion.js";
 
 const WAIT_TIME = 0.5;
 const KEY_GAP = 0.4;
@@ -9,13 +11,15 @@ export class Text {
   constructor() {
 
     this.text = [];
-    this.keyboard_list = [ new key1(), new key2(), new key3() ];
-    this.keyboard_index = 2;
+    this.keyboard_list = [ new key0(), new key4(), new key2(), ]; // new key1(), new key3() ];
+    this.keyboard_index = 0;
     this.keyboard = this.keyboard_list[this.keyboard_index];
 
     this.enter_push = 'idle';
     this.enter_pushing_time = 0;
 
+    this.stageWidth = 0;
+    this.stageHeight = 0;
 
     document.addEventListener('keydown', (event) => {
         if (event.key === 'Enter' || event.key === " "){
@@ -27,15 +31,11 @@ export class Text {
             this.text.pop();
         }
         else if (event.key === 'q'){
-            this.keyboard_index = 0;
+            this.keyboard_index = Math.max(0, this.keyboard_index - 1);
             this.keyboard = this.keyboard_list[this.keyboard_index];
         }
         else if (event.key === 'w'){
-            this.keyboard_index = 1;
-            this.keyboard = this.keyboard_list[this.keyboard_index];
-        }
-        else if (event.key === 'e'){
-            this.keyboard_index = 2;
+            this.keyboard_index = Math.min(this.keyboard_list.length - 1, this.keyboard_index + 1);
             this.keyboard = this.keyboard_list[this.keyboard_index];
         }
         else if (event.key === 'ArrowLeft'){
@@ -67,6 +67,12 @@ export class Text {
     });
 
   }
+  resize(stageWidth, stageHeight){
+    this.stageWidth = stageWidth;
+    this.stageHeight = stageHeight;
+
+    this.keyboard.resize(this.stageWidth, this.stageHeight);
+  }
 
   animate(ctx) {
 
@@ -83,7 +89,7 @@ export class Text {
         }
     }
 
-    ctx.font = "48px serif";
+    ctx.font = "50px serif";
     let text = Hangul.assemble(this.text);
     ctx.fillText(text, 100, 100);
   }

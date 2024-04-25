@@ -36,7 +36,7 @@ class App {
     this.ctx.shadowBlur = 6;
     this.ctx.shadowColor = "rgba(0, 0, 0, 0.5)";
 
-    this.ctx.lineWidth = 2;
+    this.ctx.lineWidth = 10;
 
   }
 
